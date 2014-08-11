@@ -11,4 +11,5 @@ from selenium import webdriver
 browser = webdriver.Firefox()
 browser.get('http://localhost:8000')
 
-assert 'Django' in browser.title #for stock Django installation
+#for stock Django installation. this will probably change once app is built out
+assert 'Django' in browser.title
