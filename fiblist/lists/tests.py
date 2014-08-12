@@ -9,6 +9,7 @@ desription  :   tests for the lists application
 from django.core.urlresolvers import resolve
 from django.test import TestCase
 from django.http import HttpRequest
+from django.template.loader import render_to_string
 
 from .views import home_page
 
@@ -31,7 +32,6 @@ class HomePageTest(TestCase):
         
         request = HttpRequest()
         response = home_page(request)
+        expected_html = render_to_string('home.html')
         
-        self.assertTrue(response.content.startswith(b'<html>'))
-        self.assertIn(b'<title>To-Do Lists</title>', response.content)
-        self.assertTrue(response.content.endswith(b'</html>'))
+        self.assertEqual(response.content.decode(), expected_html)
