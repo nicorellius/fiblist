@@ -6,8 +6,10 @@ classes     :
 desription  :   functional tests for aersol project
 """
 
-from selenium import webdriver
 import unittest
+
+from selenium import webdriver
+from selenium.webdriver.common.keys import Keys
 
 
 # Testing basic app functionality.
@@ -27,14 +29,32 @@ class NewVisitorTest(unittest.TestCase):
         # First, make sure browser opened with correct page.
         self.browser.get('http://localhost:8000')
         
+        # Check the title and be sure it's what we expect
         self.assertIn('To-Do', self.browser.title)
-        self.fail('Finish the test!')
+        
+        # Confirm header mentions the title of page
+        header_text = self.browser.find_element_by_tag_name('h1').txt
+        self.assertIn('To-Do', header_text)
         
         # User is invited to enter a to-do item in application.
+        input_box = self.browser.find_element_by_id('id_new_item')
+        self.assertEqual(
+            input_box.get_attribute('placeholder'),
+            'Enter a To-Do item'
+        )
     
         # User types in "some list item" into text box.
+        input_box.send_keys('some list item')
         
         # When user hits enter, the page updates and the list item is saved.
+        input_box.send_keys(Keys.ENTER)
+        
+        table = self.browser.find_element_by_id('id_list_table')
+        rows = self.browser.find_elements_by_tag_name('tr')
+        
+        self.assertTrue(
+            any(row.text == '1: some list item' for row in rows)
+        )
         
         # The field is still present, so uer can add another list item, if desired.
         
@@ -44,6 +64,7 @@ class NewVisitorTest(unittest.TestCase):
         # User clicks the URL and notices the list item is there.
         
         # End user story
+        self.fail('Finish the test!')
         
         
 if __name__ == '__main__':
