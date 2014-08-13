@@ -33,7 +33,7 @@ class NewVisitorTest(unittest.TestCase):
         self.assertIn('To-Do', self.browser.title)
         
         # Confirm header mentions the title of page
-        header_text = self.browser.find_element_by_tag_name('h1').txt
+        header_text = self.browser.find_element_by_tag_name('h1').text
         self.assertIn('To-Do', header_text)
         
         # User is invited to enter a to-do item in application.
@@ -53,7 +53,8 @@ class NewVisitorTest(unittest.TestCase):
         rows = self.browser.find_elements_by_tag_name('tr')
         
         self.assertTrue(
-            any(row.text == '1: some list item' for row in rows)
+            any(row.text == '1: some list item' for row in rows),
+            "New To-Do item not found in table."
         )
         
         # The field is still present, so uer can add another list item, if desired.
