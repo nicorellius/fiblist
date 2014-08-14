@@ -24,6 +24,13 @@ class NewVisitorTest(unittest.TestCase):
         
         self.browser.quit()
         
+    def check_for_row_in_list_table(self, row_text):
+        
+        table = self.browser.find_element_by_id('id_list_table')
+        rows = table.find_elements_by_tag_name('tr')
+        
+        self.assertIn(row_text, [row.text for row in rows])
+        
     def test_can_start_a_list_and_retrieve_it_later(self):
         
         # First, make sure browser opened with correct page.
@@ -38,23 +45,29 @@ class NewVisitorTest(unittest.TestCase):
         
         # User is invited to enter a to-do item in application.
         input_box = self.browser.find_element_by_id('id_new_item')
+        
         self.assertEqual(
             input_box.get_attribute('placeholder'),
             'Enter a To-Do item'
         )
     
         # User types in "some list item" into text box.
+                # When user hits enter, the page updates and the list item is saved.
         input_box.send_keys('some list item')
-        
-        # When user hits enter, the page updates and the list item is saved.
         input_box.send_keys(Keys.ENTER)
         
-        table = self.browser.find_element_by_id('id_list_table')
-        rows = self.browser.find_elements_by_tag_name('tr')
+        self.check_for_row_in_list_table('1: some list item')
         
-        self.assertIn('1: some list item', [row.text for row in rows])
+        # The field is still present, so uer can add another list item ("some other list item").
+        # The, as before, user hits enter, page updates
+        input_box = self.browser.find_element_by_id('id_new_item')
+        input_box.send_keys('some other list item')
+        input_box.send_keys(Keys.ENTER)
         
-        # The field is still present, so uer can add another list item, if desired.
+        # The field is still present, so uer can add another list item ("some other list item").
+        # The, as before, user hits enter, page updates
+        self.check_for_row_in_list_table('1: some list item')
+        self.check_for_row_in_list_table('2: some other list item')
         
         # User is concerned whether this site will actually remember the items entered.
         # The site generates a URL for each list item, so this is good.
