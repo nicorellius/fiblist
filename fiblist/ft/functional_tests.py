@@ -52,10 +52,7 @@ class NewVisitorTest(unittest.TestCase):
         table = self.browser.find_element_by_id('id_list_table')
         rows = self.browser.find_elements_by_tag_name('tr')
         
-        self.assertTrue(
-            any(row.text == '1: some list item' for row in rows),
-            "New To-Do item not found in table."
-        )
+        self.assertIn('1: some list item', [row.text for row in rows])
         
         # The field is still present, so uer can add another list item, if desired.
         
