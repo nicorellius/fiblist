@@ -59,6 +59,9 @@ class NewVisitorTest(LiveServerTestCase):
         # When user hits enter, the page updates and the list item is saved.
         input_box.send_keys(Keys.ENTER)
         
+        nick_list_url = self.browser.current_url
+        
+        self.assertRegex(nick_list_url, '/lists/.+')
         self.check_for_row_in_list_table('1: some list item')
         
         # The field is still present, so uer can add another list item ("some other list item").
@@ -72,10 +75,34 @@ class NewVisitorTest(LiveServerTestCase):
         self.check_for_row_in_list_table('1: some list item')
         self.check_for_row_in_list_table('2: some other list item')
         
-        # User is concerned whether this site will actually remember the items entered.
-        # The site generates a URL for each list item, so this is good.
+        # Ne user, leah, visits site
+        self.browser.quit()
+        self.browser = webdriver.Firefox()
         
-        # User clicks the URL and notices the list item is there.
+        # Leah visits home page and no sign of Nick's lists
+        # First, make sure browser opened with correct page.
+        self.browser.get(self.live_server_url)
+        
+        page_text = self.browser.find_element_by_tag_name('body').text
+        
+        self.assertNotIn('some list item', page_text)
+        self.assertNotIn('some other list item', page_text)
+        
+        # Leah starts new list by entering text into the form field
+        input_box = self.browser.find_element_by_id('id_new_item')
+        input_box.send_keys('yet another list item')
+        input_box.send_keys(Keys.ENTER)
+        
+        # Leah gets her own unique URL
+        leah_list_url = self.browser.current_url
+        
+        self.assertRegex(leah_list_url, '/lists/.+')
+        self.assertNotEqual(leah_list_url, nick_list_url)
+        
+        page_text = self.browser.find_element_by_tag_name('body').text
+        
+        self.assertNotIn('some list item', page_text)
+        self.assertIn('yet another list item', page_text)
         
         # End user story
         self.fail('Finish the test!')
