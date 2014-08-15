@@ -12,7 +12,7 @@ from django.http import HttpRequest
 from django.template.loader import render_to_string
 
 from .views import home_page
-#from .models import Item
+from .models import Item
 
 
 class SmokeTest(TestCase):
@@ -37,7 +37,7 @@ class HomePageTest(TestCase):
         
         self.assertEqual(response.content.decode(), expected_html)
 
-    def test_home_page_can_save_a_post_request(self):
+    def test_home_page_can_save_post_request(self):
     
         request = HttpRequest()
         request.method = 'POST'
@@ -45,17 +45,43 @@ class HomePageTest(TestCase):
         
         response = home_page(request)
         
-        self.assertIn('A new list item', response.content.decode())
+        self.assertEqual(Item.objects.count(), 1)
         
-        expected_html = render_to_string(
-            'home.html',
-            {'new_item_text': 'A new list item'}
-        )
+        new_item = Item.objects.first()
         
-        self.assertEqual(response.content.decode(), expected_html)
+        self.assertEqual(new_item.text, 'A new list item')
+        
+        self.assertEqual(response.status_code, 302)
+        self.assertEqual(response['location'], '/')
+        
+    def test_home_page_redirects_after_post(self):
     
-        #self.assertEqual(Item.objects.count(), 1)
+        request = HttpRequest()
+        request.method = 'POST'
+        request.POST['item_text'] = 'A new list item'
         
-        #new_item = Item.objects.first()
+        response = home_page(request)
         
-        #self.assertEqual(new_item.text, 'A new list item')
+        self.assertEqual(response.status_code, 302)
+        self.assertEqual(response['location'], '/')
+
+        
+    def test_home_page_only_saves_items_when_necessary(self):
+        
+        request = HttpRequest()
+        
+        home_page(request)
+        
+        self.assertEqual(Item.objects.count(), 0)
+        
+
+    def test_home_page_displays_all_list_items(self):
+        
+        Item.objects.create(text='item 1')
+        Item.objects.create(text='item 2')
+        
+        request = HttpRequest()
+        response = home_page(request)
+        
+        self.assertIn('item 1', response.content.decode())
+        self.assertIn('item 2', response.content.decode())

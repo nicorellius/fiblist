@@ -52,8 +52,9 @@ class NewVisitorTest(unittest.TestCase):
         )
     
         # User types in "some list item" into text box.
-                # When user hits enter, the page updates and the list item is saved.
         input_box.send_keys('some list item')
+        
+        # When user hits enter, the page updates and the list item is saved.
         input_box.send_keys(Keys.ENTER)
         
         self.check_for_row_in_list_table('1: some list item')
