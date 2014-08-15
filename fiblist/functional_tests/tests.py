@@ -1,19 +1,21 @@
 """
-file        :   functional_tests.py
+file        :   tests.py
 date        :   2014-0811
-module      :   ft
+module      :   functional_tests
 classes     :   
-desription  :   functional tests for aersol project
+desription  :   functional tests for fiblilst project
 """
 
 import unittest
+
+from django.test import LiveServerTestCase
 
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 
 
 # Testing basic app functionality.
-class NewVisitorTest(unittest.TestCase):
+class NewVisitorTest(LiveServerTestCase):
     
     def setUp(self):
         
@@ -34,7 +36,7 @@ class NewVisitorTest(unittest.TestCase):
     def test_can_start_a_list_and_retrieve_it_later(self):
         
         # First, make sure browser opened with correct page.
-        self.browser.get('http://localhost:8000')
+        self.browser.get(self.live_server_url)
         
         # Check the title and be sure it's what we expect
         self.assertIn('To-Do', self.browser.title)
@@ -77,8 +79,3 @@ class NewVisitorTest(unittest.TestCase):
         
         # End user story
         self.fail('Finish the test!')
-        
-        
-if __name__ == '__main__':
-    
-    unittest.main(warnings='ignore')
