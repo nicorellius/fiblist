@@ -13,6 +13,8 @@ from django.test import LiveServerTestCase
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 
+from django.template.loader import render_to_string
+
 
 # Testing basic app functionality.
 class NewVisitorTest(LiveServerTestCase):
@@ -20,7 +22,7 @@ class NewVisitorTest(LiveServerTestCase):
     def setUp(self):
         
         self.browser = webdriver.Firefox()
-        self.browser.implicitly_wait(3)
+        self.browser.implicitly_wait(1)
         
     def tearDown(self):
         
@@ -48,10 +50,7 @@ class NewVisitorTest(LiveServerTestCase):
         # User is invited to enter a to-do item in application.
         input_box = self.browser.find_element_by_id('id_new_item')
         
-        self.assertEqual(
-            input_box.get_attribute('placeholder'),
-            'Enter a To-Do item'
-        )
+        self.assertEqual(input_box.get_attribute('placeholder'), 'Enter a To-Do item')
     
         # User types in "some list item" into text box.
         input_box.send_keys('some list item')
@@ -72,8 +71,8 @@ class NewVisitorTest(LiveServerTestCase):
         
         # The field is still present, so uer can add another list item ("some other list item").
         # The, as before, user hits enter, page updates
-        self.check_for_row_in_list_table('1: some list item')
         self.check_for_row_in_list_table('2: some other list item')
+        self.check_for_row_in_list_table('1: some list item')
         
         # Ne user, leah, visits site
         self.browser.quit()
