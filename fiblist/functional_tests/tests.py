@@ -24,9 +24,11 @@ class NewVisitorTest(LiveServerTestCase):
         self.browser = webdriver.Firefox()
         self.browser.implicitly_wait(1)
         
+        
     def tearDown(self):
         
         self.browser.quit()
+ 
         
     def check_for_row_in_list_table(self, row_text):
         
@@ -34,6 +36,7 @@ class NewVisitorTest(LiveServerTestCase):
         rows = table.find_elements_by_tag_name('tr')
         
         self.assertIn(row_text, [row.text for row in rows])
+    
         
     def test_can_start_a_list_and_retrieve_it_later(self):
         
@@ -69,12 +72,11 @@ class NewVisitorTest(LiveServerTestCase):
         input_box.send_keys('some other list item')
         input_box.send_keys(Keys.ENTER)
         
-        # The field is still present, so uer can add another list item ("some other list item").
-        # The, as before, user hits enter, page updates
+        # Check fr list items in table rows
         self.check_for_row_in_list_table('2: some other list item')
         self.check_for_row_in_list_table('1: some list item')
         
-        # Ne user, leah, visits site
+        # New user, leah, visits site
         self.browser.quit()
         self.browser = webdriver.Firefox()
         
@@ -87,7 +89,7 @@ class NewVisitorTest(LiveServerTestCase):
         self.assertNotIn('some list item', page_text)
         self.assertNotIn('some other list item', page_text)
         
-        # Leah starts new list by entering text into the form field
+        # Leah starts new list by entering text ("yet another list item") into the form field
         input_box = self.browser.find_element_by_id('id_new_item')
         input_box.send_keys('yet another list item')
         input_box.send_keys(Keys.ENTER)
