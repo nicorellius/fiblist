@@ -42,6 +42,12 @@ coverage.xml
 .project
 .pydevproject
 
+# jetbrains ide
+.idea/
+**/.idea/
+*.iml
+*.iws
+
 # Rope
 .ropeproject
 
