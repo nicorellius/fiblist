@@ -2,15 +2,8 @@
 distribute
 https://www.djangoproject.com/download/1.7c2/tarball/
 BeautifulSoup4
-Pygments
-django-flatpages-tinymce # might not be compatible with python 3
-django-tinymce # might not be compatible with python 3
 django_compressor
-django-registration
-django-profiles
 django-localflavor
-django-dajax
-django-dajaxice
 django-session-security
 django-debug-toolbar
 selenium

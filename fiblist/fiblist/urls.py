@@ -1,9 +1,9 @@
 from django.conf.urls import patterns, include, url
 from django.contrib import admin
 
-from lists.views import *
 
-urlpatterns = patterns('',
+urlpatterns = patterns(
+    '',
 
     url(r'^$', 'lists.views.home_page', name='home'),
     

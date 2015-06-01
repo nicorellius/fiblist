@@ -3,7 +3,7 @@ file        :   tests.py
 date        :   2014-0811
 module      :   functional_tests
 classes     :   
-desription  :   functional tests for fiblilst project
+description :   functional tests for fiblist project
 """
 
 import unittest
