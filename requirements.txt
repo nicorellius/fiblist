@@ -1,9 +1,6 @@
 # requirements.txt for fiblist, eg fuckit-bucket.com
 distribute
-https://www.djangoproject.com/download/1.7c2/tarball/
-BeautifulSoup4
-django_compressor
+Django==1.7
 django-localflavor
-django-session-security
 django-debug-toolbar
 selenium

@@ -8,7 +8,12 @@ https://docs.djangoproject.com/en/dev/howto/deployment/wsgi/
 """
 
 import os
-os.environ.setdefault("DJANGO_SETTINGS_MODULE", "fiblist.settings")
+import sys
 
 from django.core.wsgi import get_wsgi_application
+
+sys.path.append('/home/nick/dev/django/projects/fiblist/fiblist')
+
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", "fiblist.settings")
+
 application = get_wsgi_application()
