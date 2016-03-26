@@ -103,4 +103,4 @@ class NewVisitorTest(LiveServerTestCase):
         self.assertIn('yet another list item', page_text)
         
         # End user story
-        self.fail('Finish the test!')
+        # self.fail('Finish the test!')
