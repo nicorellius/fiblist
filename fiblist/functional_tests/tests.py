@@ -5,7 +5,7 @@ module      :   functional_tests
 classes     :   
 description :   functional tests for fiblist project
 """
-
+import sys
 # import unittest
 
 from django.test import LiveServerTestCase
@@ -18,14 +18,34 @@ from selenium.webdriver.common.keys import Keys
 
 # Testing basic app functionality.
 class NewVisitorTest(LiveServerTestCase):
-    
+
+    @classmethod
+    def setUpClass(cls):
+
+        cls.server_url = ''
+
+        for arg in sys.argv:
+            if 'liveserver' in arg:
+                cls.server_url = 'http://'.format(arg.split('=')[1])
+                return
+
+        super().setUpClass()
+
+        cls.server_url = cls.live_server_url
+
+    @classmethod
+    def tearDownClass(cls):
+
+        if cls.server_url == cls.live_server_url:
+            super().tearDownClass()
+
     def setUp(self):
-        
+
         self.browser = webdriver.Firefox()
         self.browser.implicitly_wait(1)
 
     def tearDown(self):
-        
+
         self.browser.quit()
 
     def check_for_row_in_list_table(self, row_text):
@@ -38,14 +58,14 @@ class NewVisitorTest(LiveServerTestCase):
     def test_can_start_a_list_and_retrieve_it_later(self):
         
         # First, make sure browser opened with correct page.
-        self.browser.get(self.live_server_url)
+        self.browser.get(self.server_url)
         
         # Check the title and be sure it's what we expect
-        self.assertIn('To-Do', self.browser.title)
+        self.assertIn('Fuck-it', self.browser.title)
         
         # Confirm header mentions the title of page
         header_text = self.browser.find_element_by_tag_name('h1').text
-        self.assertIn('To-Do', header_text)
+        self.assertIn('Fuck-it', header_text)
         
         # User is invited to enter a to-do item in application.
         input_box = self.browser.find_element_by_id('id_new_item')
@@ -79,7 +99,7 @@ class NewVisitorTest(LiveServerTestCase):
         
         # Leah visits home page and no sign of Nick's lists
         # First, make sure browser opened with correct page.
-        self.browser.get(self.live_server_url)
+        self.browser.get(self.server_url)
         
         page_text = self.browser.find_element_by_tag_name('body').text
         
@@ -108,7 +128,7 @@ class NewVisitorTest(LiveServerTestCase):
     def test_layout_and_styling(self):
 
         # Leah goes to the home page
-        self.browser.get(self.live_server_url)
+        self.browser.get(self.server_url)
         self.browser.set_window_size(1025, 768)
 
         input_box = self.browser.find_element_by_id('id_new_item')
