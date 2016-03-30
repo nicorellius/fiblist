@@ -26,7 +26,7 @@ class NewVisitorTest(LiveServerTestCase):
 
         for arg in sys.argv:
             if 'liveserver' in arg:
-                cls.server_url = 'http://'.format(arg.split('=')[1])
+                cls.server_url = 'http://{0}'.format(arg.split('=')[1])
                 return
 
         super().setUpClass()
