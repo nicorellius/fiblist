@@ -12,7 +12,7 @@ import sys
 
 from django.core.wsgi import get_wsgi_application
 
-sys.path.append('/home/nick/dev/django/projects/fiblist/fiblist')
+sys.path.append('/home/nick/dev/django/projects/fiblist/source')
 
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "fiblist.settings")
 
