@@ -12,7 +12,7 @@ from django.template import RequestContext
 
 def custom_bad_request(request):
 
-    response = render_to_response('templates/400.html', context_instance=RequestContext(request))
+    response = render_to_response('error/400.html', context_instance=RequestContext(request))
 
     response.status_code = 400
 
@@ -21,7 +21,7 @@ def custom_bad_request(request):
 
 def custom_permission_denied(request):
 
-    response = render_to_response('templates/403.html', context_instance=RequestContext(request))
+    response = render_to_response('error/403.html', context_instance=RequestContext(request))
 
     response.status_code = 403
 
@@ -30,7 +30,7 @@ def custom_permission_denied(request):
 
 def custom_page_not_found(request):
 
-    response = render_to_response('templates/404.html', context_instance=RequestContext(request))
+    response = render_to_response('error/404.html', context_instance=RequestContext(request))
 
     response.status_code = 404
 
@@ -39,7 +39,7 @@ def custom_page_not_found(request):
 
 def custom_server_error(request):
 
-    response = render_to_response('templates/500.html', context_instance=RequestContext(request))
+    response = render_to_response('error/500.html', context_instance=RequestContext(request))
 
     response.status_code = 500
 
@@ -48,7 +48,7 @@ def custom_server_error(request):
 
 def custom_bad_gateway(request):
 
-    response = render_to_response('templates/502.html', context_instance=RequestContext(request))
+    response = render_to_response('error/502.html', context_instance=RequestContext(request))
 
     response.status_code = 502
 
