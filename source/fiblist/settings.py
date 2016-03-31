@@ -33,7 +33,7 @@ ALLOWED_HOSTS = ['fiblist.opsys.io', 'fiblist-staging.opsys.io']
 # Application definition
 
 INSTALLED_APPS = (
-    # 'django.contrib.admin',
+    'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
