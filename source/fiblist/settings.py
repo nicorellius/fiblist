@@ -20,9 +20,13 @@ BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 SECRET_KEY = 'hdom1dt1!tulgcmycd2=fcmws9&hl*$(+=6@bh5oz7=(__#z#l'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 TEMPLATE_DEBUG = True
+
+TEMPLATE_DIRS = (
+    os.path.join(BASE_DIR, 'templates'),
+)
 
 ALLOWED_HOSTS = ['fiblist.opsys.io', 'fiblist-staging.opsys.io']
 
