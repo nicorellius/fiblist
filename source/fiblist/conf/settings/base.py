@@ -8,13 +8,20 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/dev/ref/settings/
 """
 
-# Build paths inside the project like this: os.path.join(BASE_DIR, ...)
+# Build paths inside the project like this: os.path.join(*_DIR, ...)
 import os
 
-BASE_DIR = os.path.dirname(os.path.dirname(__file__))
+# /home/nick/dev/django/projects/fiblist
+PROJECT_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__name__)))
 
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/dev/howto/deployment/checklist/
+# /home/nick/dev/django/projects/fiblist/source
+SOURCE_DIR = os.path.abspath(os.path.dirname(os.path.dirname(__name__)))
+
+# /home/nick/dev/django/projects/fiblist/source/fiblist/conf
+CONF_DIR = os.path.dirname(os.path.dirname(__file__))
+
+# /home/nick/dev/django/projects/fiblist/source/fiblist/conf/settings
+SETTINGS_DIR = os.path.dirname(__file__)
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'hdom1dt1!tulgcmycd2=fcmws9&hl*$(+=6@bh5oz7=(__#z#l'
@@ -25,10 +32,10 @@ DEBUG = True
 TEMPLATE_DEBUG = True
 
 TEMPLATE_DIRS = (
-    os.path.join(BASE_DIR, 'templates'),
+    os.path.join(SOURCE_DIR, 'templates'),
 )
 
-ALLOWED_HOSTS = ['fiblist.opsys.io', 'fiblist-staging.opsys.io']
+ALLOWED_HOSTS = []
 
 # Application definition
 
@@ -40,7 +47,6 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'lists',
-    # 'debug_toolbar',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -53,9 +59,9 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 )
 
-ROOT_URLCONF = 'fiblist.urls'
+ROOT_URLCONF = 'fiblist.conf.urls'
 
-WSGI_APPLICATION = 'fiblist.wsgi.application'
+WSGI_APPLICATION = 'fiblist.conf.wsgi.local.application'
 
 
 # Database
@@ -64,7 +70,7 @@ WSGI_APPLICATION = 'fiblist.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, '../database/db.sqlite3'),
+        'NAME': os.path.join(PROJECT_DIR, 'database/db.sqlite3'),
     }
 }
 
@@ -85,7 +91,7 @@ USE_TZ = True
 STATIC_URL = '/static/'
 
 STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'lists/static')
+    os.path.join(SOURCE_DIR, 'lists/static')
 ]
 
-STATIC_ROOT = os.path.join(BASE_DIR, '../static')
+STATIC_ROOT = os.path.join(PROJECT_DIR, 'static')

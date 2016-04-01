@@ -14,6 +14,6 @@ from django.core.wsgi import get_wsgi_application
 
 sys.path.append('/home/nick/sites/fiblist/source')
 
-os.environ.setdefault("DJANGO_SETTINGS_MODULE", "fiblist.settings")
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", "fiblist.conf.settings.staging")
 
 application = get_wsgi_application()
