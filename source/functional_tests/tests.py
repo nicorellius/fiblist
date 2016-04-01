@@ -7,14 +7,11 @@ description :   functional tests for fiblist project
 """
 
 import sys
-# import unittest
 
 from django.test import LiveServerTestCase
 
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
-
-# from django.template.loader import render_to_string
 
 
 # Testing basic app functionality.
