@@ -63,5 +63,4 @@ docs/_build/
 
 # database, virtual envs
 database/
-static/
-virtenv/
+static/*
