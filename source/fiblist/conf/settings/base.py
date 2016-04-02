@@ -23,9 +23,6 @@ CONF_DIR = os.path.dirname(os.path.dirname(__file__))
 # /home/nick/dev/django/projects/fiblist/source/fiblist/conf/settings
 SETTINGS_DIR = os.path.dirname(__file__)
 
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'hdom1dt1!tulgcmycd2=fcmws9&hl*$(+=6@bh5oz7=(__#z#l'
-
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
