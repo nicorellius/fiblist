@@ -1,13 +1,15 @@
 import random
 import string
 
-from fabric.contrib.files import append, exists, sed
+from fabric.contrib.files import exists, sed
 from fabric.api import env, local, run
+
+env.use_ssh_config = True
 
 REPO_URL = 'https://github.com/nicorellius/fiblist.git'
 SETTINGS_FOLDER = 'fiblist/conf/settings'
 PROJECT = 'fiblist'
-VIRTENV_FOLDER = '/home/{0}/dev/virtenvs/+{1}'.format(env.user, PROJECT)
+VIRTENV_FOLDER = '/home/{0}/dev/virtenvs/{1}'.format(env.user, PROJECT)
 
 
 def deploy():
@@ -17,7 +19,7 @@ def deploy():
     secret_key_file = '/etc/prv/{0}/secret_key.txt'.format(PROJECT)
 
     _create_directory_structure_if_necessary(site_folder)
-    _get_latest_source(source_folder)
+    _get_latest_source(site_folder, source_folder)
     _update_settings(source_folder, env.host)
     _generate_secret_key(secret_key_file)
     _update_virtenv(source_folder)
@@ -31,9 +33,9 @@ def _create_directory_structure_if_necessary(site_folder):
         run('mkdir -p {0}/{1}'.format(site_folder, subfolder))
 
 
-def _get_latest_source(source_folder):
+def _get_latest_source(site_folder, source_folder):
 
-    if exists('{0}/{1}'.format(source_folder, '.git')):
+    if exists('{0}/{1}'.format(site_folder, '.git')):
         run('cd {0} && git fetch'.format(source_folder))
 
     else:
