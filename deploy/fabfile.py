@@ -47,10 +47,10 @@ def _get_latest_source(site_folder, source_folder):
 
 def _update_settings(source_folder, site_name):
 
-    settings_path = '{0}/{1}/staging'.format(source_folder, SETTINGS_FOLDER)
-    sed(settings_path, 'DEBUG = True', 'DEBUG = False')
+    settings_file = '{0}/{1}/staging.py'.format(source_folder, SETTINGS_FOLDER)
+    sed(settings_file, 'DEBUG = True', 'DEBUG = False')
     sed(
-        settings_path,
+        settings_file,
         'ALLOWED_HOSTS = .+$',
         'ALLOWED_HOSTS = ["{0}"]'.format(site_name)
     )
