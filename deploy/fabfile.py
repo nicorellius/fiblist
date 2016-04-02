@@ -58,6 +58,8 @@ def _update_settings(source_folder, site_name):
 
 def _generate_secret_key(secret_key_file):
 
+    run('mkdir -p /etc/prv/{0}'.format(PROJECT))
+
     if not exists(secret_key_file):
         generated_key = ''.join(
             [random.SystemRandom().choice(''.format(
