@@ -1,7 +1,7 @@
 import random
 import string
 
-from fabric.contrib.files import exists, sed
+from fabric.contrib.files import exists, sed, sudo
 from fabric.api import env, local, run
 
 env.use_ssh_config = True
@@ -58,7 +58,7 @@ def _update_settings(source_folder, site_name):
 
 def _generate_secret_key(secret_key_file):
 
-    run('mkdir -p /etc/prv/{0}'.format(PROJECT))
+    sudo('mkdir -p /etc/prv/{0}'.format(PROJECT), user='nick')
 
     if not exists(secret_key_file):
         generated_key = ''.join(
