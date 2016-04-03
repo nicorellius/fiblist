@@ -25,6 +25,7 @@ def deploy():
     _update_virtenv(site_folder)
     _update_static_files(source_folder)
     _update_database(site_folder)
+    _restart_servers(http_server, uwsgi_server)
 
 
 def _create_directory_structure_if_necessary(site_folder):
@@ -91,3 +92,8 @@ def _update_static_files(source_folder):
 
 def _update_database(site_folder):
     run('cd {0} && {1}/bin/python3 manage.py migrate --noinput'.format(site_folder, VIRTENV_FOLDER))
+
+
+def _restart_servers(http_server, uwsgi_server):
+    sudo('service {0} restart'.format(http_server))
+    sudo('service {1} restart'.format(uwsgi_server))
