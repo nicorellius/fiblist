@@ -22,7 +22,7 @@ def deploy():
 
     _create_directory_structure_if_necessary(site_folder)
     _get_latest_source(site_folder, source_folder)
-    _generate_secret_key(secret_key_file)
+    _generate_secret_key(source_folder, secret_key_file)
     _update_virtenv(site_folder)
     _update_static_files(source_folder)
     _update_database(site_folder)
