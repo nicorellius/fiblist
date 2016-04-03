@@ -67,7 +67,7 @@ def _generate_secret_key():
 
     django_secret_key = run('echo $DJANGO_SECRET_KEY')
 
-    if not exists(django_secret_key):
+    if not django_secret_key:
 
         chars = 'abcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*(-_=+)'
         generated_key = ''.join([random.SystemRandom().choice(chars) for _ in range(50)])
