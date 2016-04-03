@@ -16,12 +16,12 @@ def deploy():
 
     site_folder = '/home/{0}/sites/{1}'.format(env.user, PROJECT)
     source_folder = '{0}/source'.format(site_folder)
-    secret_key_file = os.environ['DJANGO_SECERET_KEY']
+    # secret_key_file = os.environ['DJANGO_SECERET_KEY']
 
     _create_directory_structure_if_necessary(site_folder)
     _get_latest_source(site_folder, source_folder)
     _update_settings(source_folder, env.host)
-    _generate_secret_key(secret_key_file)
+    _generate_secret_key()
     _update_virtenv(site_folder)
     _update_static_files(source_folder)
     _update_database(site_folder)
@@ -56,11 +56,11 @@ def _update_settings(source_folder, site_name):
     )
 
 
-def _generate_secret_key(secret_key_file):
+def _generate_secret_key():
 
     sudo('mkdir -p /etc/prv/{0}'.format(PROJECT))
 
-    if not exists(secret_key_file):
+    if not exists(os.environ['DJANGO_SECRET_KEY']):
         generated_key = ''.join(
             [random.SystemRandom().choice('abcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*(-_=+)')
                 for _ in range(50)]
