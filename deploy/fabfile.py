@@ -72,7 +72,7 @@ def _generate_secret_key(secret_key_file):
         # secret.close()
 
 
-def _update_virtenv(source_folder):
+def _update_virtenv(site_folder):
 
     virtenv_folder = VIRTENV_FOLDER
 
@@ -81,7 +81,7 @@ def _update_virtenv(source_folder):
 
     run('{0}/bin/pip install -r {1}/requirements.txt'.format(
         virtenv_folder,
-        source_folder
+        site_folder
     ))
 
 
