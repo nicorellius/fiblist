@@ -58,9 +58,9 @@ def _update_settings(source_folder, site_name):
 
 def _generate_secret_key():
 
-    sudo('mkdir -p /etc/prv/{0}'.format(PROJECT))
+    django_secret_key = run('echo $DJANGO_SECRET_KEY')
 
-    if not exists(os.environ['DJANGO_SECRET_KEY']):
+    if not exists(django_secret_key):
         generated_key = ''.join(
             [random.SystemRandom().choice('abcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*(-_=+)')
                 for _ in range(50)]
