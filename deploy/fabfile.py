@@ -62,7 +62,9 @@ def _generate_secret_key(source_folder, secret_key_file):
         append(settings_file, '\nSECRET_KEY = "{0}"'.format(generated_key))
 
     else:
-        append(settings_file, '\nSECRET_KEY = "{0}"'.format(print(secret_key_file)))
+        with open(secret_key_file, 'r') as key_file:
+            data = key_file.read().replace('\n', '')
+            append(settings_file, '\nSECRET_KEY = "{0}"'.format(data))
 
 
 def _update_virtenv(site_folder):
