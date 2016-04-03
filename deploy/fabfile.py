@@ -66,7 +66,7 @@ def _generate_secret_key(secret_key_file):
                 for _ in range(50)]
         )
 
-        run('export DJANGO_SECRET_KEY={0}'.format(generated_key))
+        run('export DJANGO_SECRET_KEY="{0}"'.format(generated_key))
         # secret = open(secret_key_file, 'w')
         # secret.write(generated_key)
         # secret.close()
