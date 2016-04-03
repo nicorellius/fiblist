@@ -62,11 +62,8 @@ def _generate_secret_key(secret_key_file):
 
     if not exists(secret_key_file):
         generated_key = ''.join(
-            [random.SystemRandom().choice('{0}{1}{2}'.format(
-                string.ascii_letters,
-                string.digits,
-                string.punctuation)
-            ) for _ in range(50)]
+            [random.SystemRandom().choice('abcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*(-_=+)')
+                for _ in range(50)]
         )
 
         run('export DJANGO_SECRET_KEY={0}'.format(generated_key))
