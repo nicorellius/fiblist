@@ -16,14 +16,14 @@ def deploy():
 
     site_folder = '/home/{0}/sites/{1}'.format(env.user, PROJECT)
     source_folder = '{0}/source'.format(site_folder)
-    # secret_key_file = os.environ['DJANGO_SECERET_KEY']
+    secret_key_file = '/etc/prv/{0}/secret_key.txt'.format(PROJECT)
     http_server = 'nginx'
     uwsgi_server = 'uwsgi'
 
     _create_directory_structure_if_necessary(site_folder)
     _get_latest_source(site_folder, source_folder)
     _update_settings(source_folder, env.host)
-    # _generate_secret_key()
+    _generate_secret_key(secret_key_file)
     _update_virtenv(site_folder)
     _update_static_files(source_folder)
     _update_database(site_folder)
@@ -48,35 +48,19 @@ def _get_latest_source(site_folder, source_folder):
     run('cd {0} && git reset --hard {1}'.format(source_folder, current_commit))
 
 
-def _update_settings(source_folder, site_name):
+def _generate_secret_key(source_folder, secret_key_file):
 
     settings_file = '{0}/{1}/staging.py'.format(source_folder, SETTINGS_FOLDER)
-    sed(settings_file, 'DEBUG = True', 'DEBUG = False')
-    sed(
-        settings_file,
-        'ALLOWED_HOSTS = .+$',
-        'ALLOWED_HOSTS = ["{0}"]'.format(site_name)
-    )
 
-    secret_key = _generate_secret_key()
-
-    append(settings_file, '\nSECRET_KEY = "{0}"'.format(secret_key))
-
-
-def _generate_secret_key():
-
-    django_secret_key = run('echo $DJANGO_SECRET_KEY')
+    # django_secret_key = run('echo $DJANGO_SECRET_KEY')
     # TODO -- the echo above not outputting anything!!!
 
-    if not django_secret_key:
+    if not exists(secret_key_file):
 
         chars = 'abcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*(-_=+)'
         generated_key = ''.join([random.SystemRandom().choice(chars) for _ in range(50)])
-        django_secret_key = generated_key
 
-        run('export DJANGO_SECRET_KEY="{0}"'.format(generated_key))
-
-    return django_secret_key
+        append(settings_file, '\nSECRET_KEY = "{0}"'.format(generated_key))
 
 
 def _update_virtenv(site_folder):
