@@ -22,7 +22,7 @@ def deploy():
     _get_latest_source(site_folder, source_folder)
     _update_settings(source_folder, env.host)
     _generate_secret_key(secret_key_file)
-    _update_virtenv(source_folder)
+    _update_virtenv(site_folder)
     _update_static_files(source_folder)
     _update_database(source_folder)
 
