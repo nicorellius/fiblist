@@ -1,5 +1,5 @@
+import os
 import random
-import string
 
 from fabric.contrib.files import exists, sed, sudo
 from fabric.api import env, local, run
@@ -16,7 +16,6 @@ def deploy():
 
     site_folder = '/home/{0}/sites/{1}'.format(env.user, PROJECT)
     source_folder = '{0}/source'.format(site_folder)
-    secret_key_file = '/etc/prv/{0}/secret_key.txt'.format(PROJECT)
 
     _create_directory_structure_if_necessary(site_folder)
     _get_latest_source(site_folder, source_folder)
@@ -60,7 +59,7 @@ def _generate_secret_key(secret_key_file):
 
     sudo('mkdir -p /etc/prv/{0}'.format(PROJECT))
 
-    if not exists(secret_key_file):
+    if not exists(os.environ['DJANGO_SECERET_KEY']):
         generated_key = ''.join(
             [random.SystemRandom().choice('abcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*(-_=+)')
                 for _ in range(50)]
