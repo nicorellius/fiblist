@@ -6,6 +6,6 @@ DEBUG = False
 # with open('/etc/prv/fiblist/secret_key.txt') as secret_key:
 #     SECRET_KEY = secret_key.read().strip()
 
-SECRET_KEY = os.environ['DJANGO_SECRET_KEY']
+# SECRET_KEY = os.environ['DJANGO_SECRET_KEY']
 
 ALLOWED_HOSTS += ['fiblist-staging.opsys.io']

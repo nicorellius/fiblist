@@ -1,7 +1,7 @@
 import os
 import random
 
-from fabric.contrib.files import exists, sed, sudo
+from fabric.contrib.files import exists, sed, sudo, append
 from fabric.api import env, local, run
 
 env.use_ssh_config = True
@@ -21,7 +21,7 @@ def deploy():
     _create_directory_structure_if_necessary(site_folder)
     _get_latest_source(site_folder, source_folder)
     _update_settings(source_folder, env.host)
-    _generate_secret_key()
+    # _generate_secret_key()
     _update_virtenv(site_folder)
     _update_static_files(source_folder)
     _update_database(site_folder)
@@ -56,6 +56,10 @@ def _update_settings(source_folder, site_name):
         'ALLOWED_HOSTS = ["{0}"]'.format(site_name)
     )
 
+    secret_key = _generate_secret_key()
+
+    append(settings_file, 'SECRET_KEY = "{0}"'.format(secret_key))
+
 
 def _generate_secret_key():
 
@@ -67,7 +71,11 @@ def _generate_secret_key():
                 for _ in range(50)]
         )
 
+        django_secret_key = generated_key
+
         run('export DJANGO_SECRET_KEY="{0}"'.format(generated_key))
+
+    return django_secret_key
 
 
 def _update_virtenv(site_folder):
