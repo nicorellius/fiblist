@@ -24,7 +24,7 @@ def deploy():
     _generate_secret_key(secret_key_file)
     _update_virtenv(site_folder)
     _update_static_files(source_folder)
-    _update_database(source_folder)
+    _update_database(site_folder)
 
 
 def _create_directory_structure_if_necessary(site_folder):
@@ -86,8 +86,11 @@ def _update_virtenv(site_folder):
 
 
 def _update_static_files(source_folder):
-    run('cd {0} && bin/python3 manage.py collectstatic --noinput'.format(VIRTENV_FOLDER))
+    run('cd {0} && {1}/bin/python3 manage.py collectstatic --noinput'.format(
+        source_folder,
+        VIRTENV_FOLDER
+    ))
 
 
-def _update_database(source_folder):
-    run('cd {0} && bin/python3 manage.py migrate --noinput'.format(VIRTENV_FOLDER))
+def _update_database(site_folder):
+    run('cd {0} && {1}/bin/python3 manage.py migrate --noinput'.format(site_folder, VIRTENV_FOLDER))
