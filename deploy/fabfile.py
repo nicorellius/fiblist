@@ -62,7 +62,7 @@ def _generate_secret_key(secret_key_file):
 
     if not exists(secret_key_file):
         generated_key = ''.join(
-            [random.SystemRandom().choice(''.format(
+            [random.SystemRandom().choice('{0}{1}{2}'.format(
                 string.ascii_letters,
                 string.digits,
                 string.punctuation)
