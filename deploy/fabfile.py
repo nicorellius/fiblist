@@ -66,7 +66,7 @@ def _update_settings(source_folder, site_name):
 def _generate_secret_key():
 
     django_secret_key = run('echo $DJANGO_SECRET_KEY')
-    run('echo django_secret_key')
+    # TODO -- the echo above not outputting anything!!!
 
     if not django_secret_key:
 
