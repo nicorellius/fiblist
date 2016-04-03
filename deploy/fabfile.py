@@ -4,6 +4,8 @@ import random
 from fabric.contrib.files import exists, sed, sudo, append
 from fabric.api import env, local, run
 
+from django.utils.crypto import get_random_string
+
 env.use_ssh_config = True
 
 REPO_URL = 'https://github.com/nicorellius/fiblist.git'
@@ -17,6 +19,8 @@ def deploy():
     site_folder = '/home/{0}/sites/{1}'.format(env.user, PROJECT)
     source_folder = '{0}/source'.format(site_folder)
     # secret_key_file = os.environ['DJANGO_SECERET_KEY']
+    http_server = 'nginx'
+    uwsgi_server = 'uwsgi'
 
     _create_directory_structure_if_necessary(site_folder)
     _get_latest_source(site_folder, source_folder)
@@ -58,7 +62,7 @@ def _update_settings(source_folder, site_name):
 
     secret_key = _generate_secret_key()
 
-    append(settings_file, 'SECRET_KEY = "{0}"'.format(secret_key))
+    append(settings_file, '\nSECRET_KEY = "{0}"'.format(secret_key))
 
 
 def _generate_secret_key():
@@ -66,11 +70,9 @@ def _generate_secret_key():
     django_secret_key = run('echo $DJANGO_SECRET_KEY')
 
     if not exists(django_secret_key):
-        generated_key = ''.join(
-            [random.SystemRandom().choice('abcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*(-_=+)')
-                for _ in range(50)]
-        )
 
+        chars = 'abcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*(-_=+)'
+        generated_key = ''.join([random.SystemRandom().choice(chars) for _ in range(50)])
         django_secret_key = generated_key
 
         run('export DJANGO_SECRET_KEY="{0}"'.format(generated_key))
