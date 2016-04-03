@@ -1,10 +1,8 @@
-import os
 import random
 
 from fabric.contrib.files import exists, sed, sudo, append
 from fabric.api import env, local, run
 
-from django.utils.crypto import get_random_string
 
 env.use_ssh_config = True
 
