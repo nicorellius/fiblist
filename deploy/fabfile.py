@@ -64,7 +64,7 @@ def _generate_secret_key(source_folder, secret_key_file):
             append(settings_file, '\nSECRET_KEY = "{0}"'.format(tmp_key_file))
 
     else:
-        local("python -c 'print('Remote key file does not exist. Making one now.')'")
+        print("[localhost] print: Remote key file does not exist. Making one now.")
         chars = 'abcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*(-_=+)'
         generated_key = ''.join([random.SystemRandom().choice(chars) for _ in range(50)])
 
