@@ -11,9 +11,9 @@
 
 **Ubuntu and Python packages**
 
-> `sudo apt-get install nginx`
-> `sudo apt-get install vim git python3 python3-pip`
-> `sudo pip install virtualenvwrapper`
+> `sudo apt-get install nginx`  
+> `sudo apt-get install vim git python3 python3-pip`  
+> `sudo pip install virtualenvwrapper`  
 
 **Add to `~/.bashrc`**
 
