@@ -5,7 +5,7 @@ module      :   deploy
 description :   fabric fabfile for deploying to staging/production
 """
 
-from __future__ import print_function
+# from __future__ import print_function
 
 import os
 import random
@@ -87,7 +87,12 @@ def _generate_secret_key(source_folder, secret_key_file):
         secret_key_file = os.path.join('/tmp/', 'secret_key.txt')
 
         with open(secret_key_file, 'r+') as text_file:
-            print('{0}'.format(generated_key), file=text_file)
+            # TODO -- this can be run with Python 2.7 print statement.
+            text_file.write('{0}'.format(generated_key))
+
+            # TODO -- the below requires `from __future__ import print_function` to work.
+            # print('{0}'.format(generated_key), file=text_file)
+
             put(use_sudo=True, local_path=text_file, remote_path='/etc/prv/fiblist/secret_key.txt')
             sudo('rm -rf /tmp/secret_key.txt')
 
@@ -107,19 +112,27 @@ def _update_virtenv(site_folder):
 
 def _update_static_files(source_folder):
 
-    run('cd {0} && {1}/bin/python3 manage.py collectstatic --noinput --settings={2}.conf.settings.staging'.format(
+    noinput = '--noinput'
+    settings = '--settings={0}.conf.settings.staging'.format(PROJECT)
+
+    run('cd {0} && {1}/bin/python3 manage.py collectstatic {2} {3}'.format(
         source_folder,
         VIRTENV_FOLDER,
-        PROJECT
+        noinput,
+        settings
     ))
 
 
 def _update_database(source_folder):
 
-    run('cd {0} && {1}/bin/python3 manage.py migrate --noinput --settings={2}.conf.settings.staging'.format(
+    noinput = '--noinput'
+    settings = '--settings={0}.conf.settings.staging'.format(PROJECT)
+
+    run('cd {0} && {1}/bin/python3 manage.py migrate {2} {3}'.format(
         source_folder,
         VIRTENV_FOLDER,
-        PROJECT
+        noinput,
+        settings
     ))
 
 
