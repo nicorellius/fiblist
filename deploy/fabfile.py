@@ -100,7 +100,11 @@ def _update_static_files(source_folder):
 
 
 def _update_database(site_folder):
-    run('cd {0} && {1}/bin/python3 manage.py migrate --noinput'.format(site_folder, VIRTENV_FOLDER))
+    run('cd {0} && {1}/bin/python3 manage.py migrate --noinput --settings={2}.conf.settings.staging'.format(
+        site_folder,
+        VIRTENV_FOLDER,
+        PROJECT
+    ))
 
 
 def _restart_servers(http_server, uwsgi_server):
