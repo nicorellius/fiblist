@@ -92,9 +92,10 @@ def _update_virtenv(site_folder):
 
 
 def _update_static_files(source_folder):
-    run('cd {0} && {1}/bin/python3 manage.py collectstatic --noinput'.format(
+    run('cd {0} && {1}/bin/python3 manage.py collectstatic --noinput --settings={2}.conf.settings.staging'.format(
         source_folder,
-        VIRTENV_FOLDER
+        VIRTENV_FOLDER,
+        PROJECT
     ))
 
 
