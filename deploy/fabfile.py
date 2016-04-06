@@ -88,7 +88,7 @@ def _generate_secret_key(source_folder, secret_key_file):
 
         with open(secret_key_file, 'w') as text_file:
             print('{0}'.format(generated_key), file=text_file)
-            put(local_path=text_file, remote_path='/etc/prv/fiblist/secret_key.txt')
+            put(use_sudo=True, local_path=text_file, remote_path='/etc/prv/fiblist/secret_key.txt')
             sudo('rm -rf /tmp/secret_key.txt')
 
 
