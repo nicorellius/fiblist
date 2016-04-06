@@ -1,3 +1,11 @@
+"""
+file        :   fabfile.py
+date        :   2016-04-01
+module      :   deploy
+description :   fabric fabfile for deploying to staging/production
+"""
+
+import os
 import random
 
 from fabric.contrib.files import exists, sudo, append
@@ -58,10 +66,10 @@ def _generate_secret_key(source_folder, secret_key_file):
         with open(tmp_key_path, 'r') as key_file:
             data = key_file.read().replace('\n', '')
 
-        tmp_key_file = data
+        # tmp_key_file = data
 
-        if tmp_key_file is not '':
-            append(settings_file, '\nSECRET_KEY = "{0}"'.format(tmp_key_file))
+        if data is not '':
+            append(settings_file, '\nSECRET_KEY = "{0}"'.format(data))
 
         sudo('rm -rf /tmp/secret_key.txt')
 
@@ -72,10 +80,11 @@ def _generate_secret_key(source_folder, secret_key_file):
 
         append(settings_file, '\nSECRET_KEY = "{0}"'.format(generated_key))
 
-        with open('/tmp/secret_key.txt', 'w') as text_file:
-            print("{0}".format(generated_key), file=text_file)
+        with open('secret_key.txt', 'w') as text_file:
+            print('{0}'.format(generated_key), file=text_file)
+            tmp_key_file = os.path.join('/tmp/', tmp_key_file)
 
-        put(local_path='/tmp/secret_key.txt', remote_path='/etc/prv/fiblist/secret_key.txt')
+        put(local_path=tmp_key_file, remote_path='/etc/prv/fiblist/secret_key.txt')
 
         sudo('rm -rf /tmp/secret_key.txt')
 
