@@ -51,13 +51,6 @@ def _generate_secret_key(source_folder, secret_key_file):
 
     settings_file = '{0}/{1}/staging.py'.format(source_folder, SETTINGS_FOLDER)
 
-    # run('echo $DJANGO_SETTINGS_MODULE')
-
-    # with open(secret_key_file, 'r') as f:
-    #    print(f.read())
-
-    # TODO -- the echo above not outputting anything!!!
-
     get(remote_path=secret_key_file, local_path='/tmp/secret_key.txt')
 
     tmp_key_path = '/tmp/secret_key.txt'
@@ -65,13 +58,13 @@ def _generate_secret_key(source_folder, secret_key_file):
         data = key_file.read().replace('\n', '')
 
     tmp_key_file = data
-    print('[localhost] print: Temp key file: {0}'.format(tmp_key_file))
+    local('python -c print("Temp key file: {0})".format(tmp_key_file))')
 
     if tmp_key_file is not '':
         append(settings_file, '\nSECRET_KEY = "{0}"'.format(tmp_key_file))
 
     else:
-        print('[localhost] print: Remote key file does not exist. Making one now.')
+        local('python -c print("Remote key file does not exist. Making one now.")')
         chars = 'abcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*(-_=+)'
         generated_key = ''.join([random.SystemRandom().choice(chars) for _ in range(50)])
 
