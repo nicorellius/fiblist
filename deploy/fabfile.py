@@ -109,4 +109,4 @@ def _update_database(source_folder):
 
 def _restart_servers(http_server, uwsgi_server):
     sudo('service {0} restart'.format(http_server))
-    sudo('restart {1}'.format(uwsgi_server))
+    sudo('restart {0}'.format(uwsgi_server))
