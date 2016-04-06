@@ -82,7 +82,7 @@ def _generate_secret_key(source_folder, secret_key_file):
 
         with open('secret_key.txt', 'w') as text_file:
             print('{0}'.format(generated_key), file=text_file)
-            tmp_key_file = os.path.join('/tmp/', tmp_key_file)
+            tmp_key_file = os.path.join('/tmp/', text_file)
 
         put(local_path=tmp_key_file, remote_path='/etc/prv/fiblist/secret_key.txt')
 
