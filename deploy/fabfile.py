@@ -5,6 +5,8 @@ module      :   deploy
 description :   fabric fabfile for deploying to staging/production
 """
 
+from __future__ import print_function
+
 import os
 import random
 
@@ -60,9 +62,10 @@ def _generate_secret_key(source_folder, secret_key_file):
     settings_file = '{0}/{1}/staging.py'.format(source_folder, SETTINGS_FOLDER)
 
     if exists(secret_key_file):
-        get(local_path='/tmp/secret_key.txt', remote_path=secret_key_file)
 
+        get(local_path='/tmp/secret_key.txt', remote_path=secret_key_file)
         tmp_key_path = '/tmp/secret_key.txt'
+
         with open(tmp_key_path, 'r') as key_file:
             data = key_file.read().replace('\n', '')
 
@@ -74,6 +77,7 @@ def _generate_secret_key(source_folder, secret_key_file):
         sudo('rm -rf /tmp/secret_key.txt')
 
     else:
+
         print("[localhost] print: Remote key file does not exist. Making one now.")
         chars = 'abcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*(-_=+)'
         generated_key = ''.join([random.SystemRandom().choice(chars) for _ in range(50)])
@@ -85,7 +89,6 @@ def _generate_secret_key(source_folder, secret_key_file):
             tmp_key_file = os.path.join('/tmp/', text_file)
 
         put(local_path=tmp_key_file, remote_path='/etc/prv/fiblist/secret_key.txt')
-
         sudo('rm -rf /tmp/secret_key.txt')
 
 
@@ -103,6 +106,7 @@ def _update_virtenv(site_folder):
 
 
 def _update_static_files(source_folder):
+
     run('cd {0} && {1}/bin/python3 manage.py collectstatic --noinput --settings={2}.conf.settings.staging'.format(
         source_folder,
         VIRTENV_FOLDER,
@@ -111,6 +115,7 @@ def _update_static_files(source_folder):
 
 
 def _update_database(source_folder):
+
     run('cd {0} && {1}/bin/python3 manage.py migrate --noinput --settings={2}.conf.settings.staging'.format(
         source_folder,
         VIRTENV_FOLDER,
@@ -119,5 +124,6 @@ def _update_database(source_folder):
 
 
 def _restart_servers(http_server, uwsgi_server):
+
     sudo('service {0} restart'.format(http_server))
     sudo('restart {0}'.format(uwsgi_server))
