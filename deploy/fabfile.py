@@ -58,11 +58,13 @@ def _generate_secret_key(source_folder, secret_key_file):
 
     # TODO -- the echo above not outputting anything!!!
 
-    remote_key_file = get(secret_key_file)
+    get(remote_path=secret_key_file, local_path='/tmp/secret_key.txt')
 
-    if exists(remote_key_file):
+    tmp_key_file = '/tmp/secret_key.txt'
 
-        with open(remote_key_file, 'r') as key_file:
+    if exists(tmp_key_file):
+
+        with open(tmp_key_file, 'r') as key_file:
             data = key_file.read().replace('\n', '')
             append(settings_file, '\nSECRET_KEY = "{0}"'.format(data))
 
