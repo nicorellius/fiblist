@@ -58,7 +58,7 @@ def _generate_secret_key(source_folder, secret_key_file):
         data = key_file.read().replace('\n', '')
 
     tmp_key_file = data
-    local('python -c print("Temp key file: {0})".format(tmp_key_file))')
+    local('python -c print("Temp key file: {0}".format(tmp_key_file))')
 
     if tmp_key_file is not '':
         append(settings_file, '\nSECRET_KEY = "{0}"'.format(tmp_key_file))
