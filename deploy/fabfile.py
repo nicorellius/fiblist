@@ -1,7 +1,7 @@
 import random
 
-from fabric.contrib.files import exists, sed, sudo, append
-from fabric.api import env, local, run
+from fabric.contrib.files import exists, sudo, append
+from fabric.api import env, local, run, get
 
 
 env.use_ssh_config = True
@@ -58,8 +58,11 @@ def _generate_secret_key(source_folder, secret_key_file):
 
     # TODO -- the echo above not outputting anything!!!
 
-    if exists(secret_key_file):
-        with open(secret_key_file, 'r') as key_file:
+    remote_key_file = get(secret_key_file)
+
+    if exists(remote_key_file):
+
+        with open(remote_key_file, 'r') as key_file:
             data = key_file.read().replace('\n', '')
             append(settings_file, '\nSECRET_KEY = "{0}"'.format(data))
 
