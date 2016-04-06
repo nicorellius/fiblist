@@ -9,72 +9,32 @@
 - virtualenvwrapper
 - uwsgi
 
-**On Ubuntu**
+**Ubuntu and Python packages**
 
 > `sudo apt-get install nginx`
 > `sudo apt-get install vim git python3 python3-pip`
 > `sudo pip install virtualenvwrapper`
 
-Add to ~/.bashrc:
+**Add to `~/.bashrc`**
 
 > `export WORKON_HOME=$HOME/dev/virtenvs`
 > `source /usr/local/bin/virtualenvwrapper.sh`
 
-**source tree**
+## nginx virtual host configuration
 
-> `/home/nick/dev/django/projects/fiblist/source`
-`├── core`
-`│   ├── __init__.py`
-`│   └── views.py`
-`├── fiblist`
-`│   ├── conf`
-`│   │   ├── __init__.py`
-`│   │   ├── settings`
-`│   │   │   ├── base.py`
-`│   │   │   ├── __init__.py`
-`│   │   │   ├── local.py`
-`│   │   │   ├── production.py`
-`│   │   │   └── staging.py`
-`│   │   ├── urls.py`
-`│   │   └── wsgi`
-`│   │       ├── __init__.py`
-`│   │       ├── local.py`
-`│   │       ├── production.py`
-`│   │       └── staging.py`
-`│   └── __init__.py`
-`├── functional_tests`
-`│   ├── __init__.py`
-`│   └── tests.py`
-`├── __init__.py`
-`├── lists`
-`│   ├── admin.py`
-`│   ├── __init__.py`
-`│   ├── migrations [. . .]`
-`│   ├── models.py`
-`│   ├── static`
-`│   │   ├── bootstrap`
-`│   │   │   ├── css`
-`│   │   │   │   └── bootstrap.css`
-`│   │   │   ├── fonts [. . .]`
-`│   │   │   └── js`
-`│   │   │       └── bootstrap.js`
-`│   │   └── css`
-`│   │       └── base.css`
-`│   ├── templates`
-`│   │   ├── home.html`
-`│   │   └── list.html`
-`│   ├── tests.py`
-`│   ├── urls.py`
-`│   └── views.py`
-`├── manage.py`
-`├── templates`
-`│   ├── base.html`
-`│   └── error [. . .]`
-`└── tester`
-`    ├── admin.py`
-`    ├── __init__.py`
-`    ├── migrations [. . .]`
-`    ├── models.py`
-`    ├── tests.py`
-`    └── views.py`
+- See the `nginx/template.conf` for template.
+
+## uWSGI compilation and configuration
+
+- Download uWSGI and build with no Python, so custom plugins ca be created.
+
+- See uwsgi/template.ini for template.
+
+## Upstart scripts
+
+- See `upstart/nginx.conf` and `upstart/uwsgi.conf` for templates.
+
+## Source tree
+
+- See `source_tree.md` for more information.
 
