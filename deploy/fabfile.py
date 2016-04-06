@@ -51,16 +51,17 @@ def _generate_secret_key(source_folder, secret_key_file):
 
     settings_file = '{0}/{1}/staging.py'.format(source_folder, SETTINGS_FOLDER)
 
-    get(remote_path=secret_key_file, local_path='/tmp/secret_key.txt')
+    if exists(secret_key_file):
+        get(remote_path=secret_key_file, local_path='/tmp/secret_key.txt')
 
-    tmp_key_path = '/tmp/secret_key.txt'
-    with open(tmp_key_path, 'r') as key_file:
-        data = key_file.read().replace('\n', '')
+        tmp_key_path = '/tmp/secret_key.txt'
+        with open(tmp_key_path, 'r') as key_file:
+            data = key_file.read().replace('\n', '')
 
-    tmp_key_file = data
+        tmp_key_file = data
 
-    if tmp_key_file is not '':
-        append(settings_file, '\nSECRET_KEY = "{0}"'.format(tmp_key_file))
+        if tmp_key_file is not '':
+            append(settings_file, '\nSECRET_KEY = "{0}"'.format(tmp_key_file))
 
     else:
         local("python -c 'print('Remote key file does not exist. Making one now.')'")
