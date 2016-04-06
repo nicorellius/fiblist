@@ -17,7 +17,7 @@
 
 **Add to `~/.bashrc`**
 
-> `export WORKON_HOME=$HOME/dev/virtenvs`
+> `export WORKON_HOME=$HOME/dev/virtenvs`  
 > `source /usr/local/bin/virtualenvwrapper.sh`
 
 ## nginx virtual host configuration
