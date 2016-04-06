@@ -51,20 +51,23 @@ def _generate_secret_key(source_folder, secret_key_file):
 
     settings_file = '{0}/{1}/staging.py'.format(source_folder, SETTINGS_FOLDER)
 
-    # django_secret_key = run('echo $DJANGO_SECRET_KEY')
+    run('echo $DJANGO_SETTINGS_MODULE')
+
+    with open(secret_key_file, 'r') as f:
+        print(f.read())
+
     # TODO -- the echo above not outputting anything!!!
 
-    if not exists(secret_key_file):
+    if exists(secret_key_file):
+        with open(secret_key_file, 'r') as key_file:
+            data = key_file.read().replace('\n', '')
+            append(settings_file, '\nSECRET_KEY = "{0}"'.format(data))
 
+    else:
         chars = 'abcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*(-_=+)'
         generated_key = ''.join([random.SystemRandom().choice(chars) for _ in range(50)])
 
         append(settings_file, '\nSECRET_KEY = "{0}"'.format(generated_key))
-
-    else:
-        with open(secret_key_file, 'r') as key_file:
-            data = key_file.read().replace('\n', '')
-            append(settings_file, '\nSECRET_KEY = "{0}"'.format(data))
 
 
 def _update_virtenv(site_folder):

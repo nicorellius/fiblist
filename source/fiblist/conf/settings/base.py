@@ -10,18 +10,23 @@ https://docs.djangoproject.com/en/dev/ref/settings/
 
 # Build paths inside the project like this: os.path.join(*_DIR, ...)
 import os
+import environ # https://github.com/joke2k/django-environ
 
 # /home/nick/dev/django/projects/fiblist
-PROJECT_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__name__)))
+# PROJECT_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__name__)))
+PROJECT_DIR = environ.Path(__file__) - 5
 
 # /home/nick/dev/django/projects/fiblist/source
-SOURCE_DIR = os.path.abspath(os.path.dirname(os.path.dirname(__name__)))
+# SOURCE_DIR = os.path.abspath(os.path.dirname(os.path.dirname(__name__)))
+SOURCE_DIR = environ.Path(__file__) - 4
 
 # /home/nick/dev/django/projects/fiblist/source/fiblist/conf
-CONF_DIR = os.path.dirname(os.path.dirname(__file__))
+# CONF_DIR = os.path.dirname(os.path.dirname(__file__))
+ONCF_DIR = environ.Path(__file__) - 2
 
 # /home/nick/dev/django/projects/fiblist/source/fiblist/conf/settings
-SETTINGS_DIR = os.path.dirname(__file__)
+# SETTINGS_DIR = os.path.dirname(__file__)
+SETTINGS_DIR = environ.Path(__file__) - 1
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -29,7 +34,8 @@ DEBUG = True
 TEMPLATE_DEBUG = True
 
 TEMPLATE_DIRS = (
-    os.path.join(SOURCE_DIR, 'templates'),
+    # os.path.join(SOURCE_DIR, 'templates'),
+    str(SOURCE_DIR.path('templates')),
 )
 
 ALLOWED_HOSTS = []
@@ -67,7 +73,8 @@ WSGI_APPLICATION = 'fiblist.conf.wsgi.local.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(PROJECT_DIR, 'database/db.sqlite3'),
+        # 'NAME': os.path.join(PROJECT_DIR, 'database/db.sqlite3'),
+        'NAME': str(PROJECT_DIR.path('database/db.sqlite3')),
     }
 }
 
@@ -88,7 +95,8 @@ USE_TZ = True
 STATIC_URL = '/static/'
 
 STATICFILES_DIRS = [
-    os.path.join(SOURCE_DIR, 'lists/static')
+    # os.path.join(SOURCE_DIR, 'lists/static')
+    str(SOURCE_DIR.path('lists/static'))
 ]
 
-STATIC_ROOT = os.path.join(PROJECT_DIR, 'static')
+STATIC_ROOT = str(PROJECT_DIR.path('static'))  # os.path.join(PROJECT_DIR, 'static')
