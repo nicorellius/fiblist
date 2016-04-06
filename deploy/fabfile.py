@@ -1,7 +1,7 @@
 import random
 
 from fabric.contrib.files import exists, sudo, append
-from fabric.api import env, local, run, get
+from fabric.api import env, local, run, get, put
 
 
 env.use_ssh_config = True
@@ -52,7 +52,7 @@ def _generate_secret_key(source_folder, secret_key_file):
     settings_file = '{0}/{1}/staging.py'.format(source_folder, SETTINGS_FOLDER)
 
     if exists(secret_key_file):
-        get(remote_path=secret_key_file, local_path='/tmp/secret_key.txt')
+        get(local_path='/tmp/secret_key.txt', remote_path=secret_key_file)
 
         tmp_key_path = '/tmp/secret_key.txt'
         with open(tmp_key_path, 'r') as key_file:
@@ -63,12 +63,21 @@ def _generate_secret_key(source_folder, secret_key_file):
         if tmp_key_file is not '':
             append(settings_file, '\nSECRET_KEY = "{0}"'.format(tmp_key_file))
 
+        sudo('rm -rf /tmp/secret_key.txt')
+
     else:
         print("[localhost] print: Remote key file does not exist. Making one now.")
         chars = 'abcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*(-_=+)'
         generated_key = ''.join([random.SystemRandom().choice(chars) for _ in range(50)])
 
         append(settings_file, '\nSECRET_KEY = "{0}"'.format(generated_key))
+
+        with open('/tmp/secret_key.txt', 'w') as text_file:
+            print("{0}".format(generated_key), file=text_file)
+
+        put(local_path='/tmp/secret_key.txt', remote_path='/etc/prv/fiblist/secret_key.txt')
+
+        sudo('rm -rf /tmp/secret_key.txt')
 
 
 def _update_virtenv(site_folder):
