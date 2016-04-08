@@ -27,8 +27,15 @@
 ## uWSGI compilation and configuration
 
 - Download uWSGI and build with no Python, so custom plugins ca be created.
-
-- See uwsgi/template.ini for template.
+- Unzip source to `/usr/local/lib/uwsgi-<version>`
+- Run this command: `make PROFILE=nolang`
+- Then build plugin for Python 3.3, 3.4, etc:
+    `PYTHON=python3.3 ./uwsgi --build-plugin "plugins/python python33"`
+- Create directory to store plugins: `mkdir /usr/lib/uwsgi/plugins`
+- Move recently created plugin(s) to this directory:
+    `mv python33_plugin.so /usr/lib/uwsgi/plugins/`
+- Make sure to adjust permissions: `root:root 644`
+- Finally, add plugin declaration to uwsgi INI file. See `uwsgi/template.ini` for template.
 
 ## Upstart scripts
 
