@@ -52,8 +52,27 @@ class NewListTest(TestCase):
         
         self.assertEqual(response.status_code, 302)
         self.assertRedirects(response, '/lists/{0}/'.format(new_list.id))
-        
-        
+
+    def test_validation_errors_sent_to_home_page(self):
+
+        response = self.client.post('/lists/new', data={'item_text': ''})
+
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'home.html')
+
+        expected_error = "You cannot submit an empty list item."
+
+        # print(response.content.decode())
+
+        self.assertContains(response, expected_error)
+
+    def test_invalid_lists_not_saved(self):
+
+        self.client.post('/lists/new', data={'item_text': ''})
+        self.assertEqual(List.objects.count(), 0)
+        self.assertEqual(Item.objects.count(), 0)
+
+
 class ListViewTest(TestCase):
     
     def test_displays_only_items_for_that_list(self):

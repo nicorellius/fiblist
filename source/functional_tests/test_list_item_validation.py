@@ -22,23 +22,23 @@ class ItemValidationTest(FunctionalTest):
         # Home page refreshes, and user gets an error message saying empty lists
         # are invalid.
         error = self.browser.find_element_by_css_selector('.has-error')
-        self.assertEqual(error.text, "You can't submit an empty list item.")
+        self.assertEqual(error.text, "You cannot submit an empty list item.")
 
         # User then enters a valid item and hists enter. This works.
-        self.browser.find_element_by_id('id_new_item').send_keys('Flash light')
+        self.browser.find_element_by_id('id_new_item').send_keys('Flash light\n')
         self.check_for_row_in_list_table('1: Flash light')
 
         # User tries again to enter empty item, error message.
         self.browser.find_element_by_id('id_new_item').send_keys('\n')
 
         # User gets empty item error message again.
-        self.browser.find_element_by_id('id_new_item').send_keys('Flash light')
+        self.check_for_row_in_list_table('1: Flash light')
         error = self.browser.find_element_by_css_selector('.has-error')
-        self.assertEqual(error.text, "You can't submit an empty list item.")
+        self.assertEqual(error.text, "You cannot submit an empty list item.")
 
         # User can correct this error by entering valid list item.
-        self.browser.find_element_by_id('id_new_item').send_keys('Batteries')
+        self.browser.find_element_by_id('id_new_item').send_keys('Batteries\n')
         self.check_for_row_in_list_table('1: Flash light')
-        self.check_for_row_in_list_table('1: Batteries')
+        self.check_for_row_in_list_table('2: Batteries')
 
         self.fail('write me!')
