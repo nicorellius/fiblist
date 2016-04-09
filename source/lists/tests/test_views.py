@@ -1,9 +1,9 @@
 """
-file        :   tests.py
+file        :   test_views.py
 date        :   2014-0811
-module      :   lists
+module      :   lists/tests
 classes     :   
-description :   tests for the lists application
+description :   view tests for the lists application
 """
 
 from django.core.urlresolvers import resolve
@@ -140,37 +140,3 @@ class HomePageTest(TestCase):
         expected_html = render_to_string('home.html')
         
         self.assertEqual(response.content.decode(), expected_html)
-        
-
-class ListAndItemModelsTest(TestCase):
-    
-    def test_saving_and_retrieving_items(self):
-        
-        list_ = List()
-        list_.save()
-        
-        first_item = Item()
-        first_item.text = "The first list item"
-        first_item.list = list_
-        first_item.save()
-        
-        second_item = Item()
-        second_item.text = "The second list item"
-        second_item.list = list_
-        second_item.save()
-        
-        saved_list = List.objects.first()
-        
-        self.assertEqual(saved_list, list_)
-        
-        saved_items = Item.objects.all()
-        
-        self.assertEqual(saved_items.count(), 2)
-        
-        first_saved_item = saved_items[0]
-        second_saved_item = saved_items[1]
-        
-        self.assertEqual(first_saved_item.text, 'The first list item')
-        self.assertEqual(first_saved_item.list, list_)
-        self.assertEqual(second_saved_item.text, 'The second list item')
-        self.assertEqual(second_saved_item.list, list_)
