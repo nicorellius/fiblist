@@ -1,15 +1,14 @@
 """
-file        :   test_views.py
-date        :   2014-0811
-module      :   lists/tests
-classes     :   
-description :   view tests for the lists application
+file: test_views.py
+date: 2014-0811  
+description: view tests for the lists application
 """
 
 from django.core.urlresolvers import resolve
 from django.test import TestCase
 from django.http import HttpRequest
 from django.template.loader import render_to_string
+from django.utils.html import escape
 
 from lists.views import home_page
 from lists.models import Item, List
@@ -60,7 +59,7 @@ class NewListTest(TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, 'home.html')
 
-        expected_error = "You cannot submit an empty list item."
+        expected_error = escape("You cannot submit an empty list item.")
 
         # print(response.content.decode())
 

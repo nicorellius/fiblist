@@ -5,11 +5,11 @@ from lists.views import home_page
 from core.views import custom_server_error
 
 # error pages
-handler400 = 'core.views.custom_bad_request'
-handler403 = 'core.views.custom_permission_denied'
-handler404 = 'core.views.custom_page_not_found'
-handler500 = 'core.views.custom_server_error'
-handler502 = 'core.views.custom_bad_gateway'
+# handler400 = 'core.views.custom_bad_request'
+# handler403 = 'core.views.custom_permission_denied'
+# handler404 = 'core.views.custom_page_not_found'
+# handler500 = 'core.views.custom_server_error'
+# handler502 = 'core.views.custom_bad_gateway'
 
 urlpatterns = [
 
@@ -19,5 +19,5 @@ urlpatterns = [
 
     url(r'^admin/', include(admin.site.urls)),
 
-    url(r'^(\d)/$', custom_server_error, name='custom-server-error'),
+    # url(r'^(\d)/$', custom_server_error, name='custom-server-error'),
 ]

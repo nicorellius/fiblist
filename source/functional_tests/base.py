@@ -1,19 +1,18 @@
 """
-file        :   base.py
-date        :   2014-0811
-module      :   functional_tests
-classes     :
-description :   functional tests for fiblist project
+file: base.py
+date: 2014-0811
+description: functional tests for fiblist project
 """
 
 import sys
 
-from django.test import LiveServerTestCase
+# from django.test import LiveServerTestCase
+from django.contrib.staticfiles.testing import StaticLiveServerTestCase
 
 from selenium import webdriver
 
 
-class FunctionalTest(LiveServerTestCase):
+class FunctionalTest(StaticLiveServerTestCase):
 
     @classmethod
     def setUpClass(cls):

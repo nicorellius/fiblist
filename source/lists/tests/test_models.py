@@ -1,9 +1,7 @@
 """
-file        :   test_models.py
-date        :   2014-0811
-module      :   lists/tests
-classes     :   
-description :   model tests for the lists application
+file: test_models.py
+date: 2014-0811  
+description: model tests for the lists application
 """
 
 from django.test import TestCase

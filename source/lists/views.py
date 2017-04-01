@@ -1,9 +1,7 @@
 """
-file        :   views.py
-date        :   2014-0812
-module      :   lists
-classes     :   
-description :   views for lists application
+file: views.py
+date: 2014-0812
+description: views for lists application
 """
 
 from django.shortcuts import redirect, render

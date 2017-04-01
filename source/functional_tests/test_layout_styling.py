@@ -1,9 +1,7 @@
 """
-file        :   test_layout_styling.py
-date        :   2014-0811
-module      :   functional_tests
-classes     :
-description :   functional tests for fiblist project
+file: test_layout_styling.py
+date: 2014-0811
+description: functional tests for fiblist project
 """
 
 from .base import FunctionalTest
@@ -15,7 +13,7 @@ class LayoutStylingTest(FunctionalTest):
 
         # User2 goes to the home page
         self.browser.get(self.server_url)
-        self.browser.set_window_size(1025, 768)
+        self.browser.set_window_size(500, 400)
 
         input_box = self.browser.find_element_by_id('id_new_item')
 
