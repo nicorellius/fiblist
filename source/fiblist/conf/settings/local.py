@@ -9,4 +9,3 @@ with open('/etc/prv/fiblist/secret_key.txt') as secret_key:
 INSTALLED_APPS += (
     'debug_toolbar',
 )
-

@@ -60,6 +60,7 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.auth.middleware.SessionAuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'debug_toolbar.middleware.DebugToolbarMiddleware',
 )
 
 ROOT_URLCONF = 'fiblist.conf.urls'
@@ -77,6 +78,20 @@ DATABASES = {
         'NAME': str(PROJECT_DIR.path('database/db.sqlite3')),
     }
 }
+
+TEMPLATES = [{
+    'BACKEND': 'django.template.backends.django.DjangoTemplates',
+    'DIRS': ['templates'],
+    'APP_DIRS': True,
+    'OPTIONS': {
+        'context_processors': [
+            'django.template.context_processors.debug',
+            'django.template.context_processors.request',
+            'django.contrib.auth.context_processors.auth',
+            'django.contrib.messages.context_processors.messages',
+        ],
+    },
+}]
 
 # Internationalization
 # https://docs.djangoproject.com/en/dev/topics/i18n/
@@ -99,4 +114,5 @@ STATICFILES_DIRS = [
     str(SOURCE_DIR.path('lists/static'))
 ]
 
-STATIC_ROOT = str(PROJECT_DIR.path('static'))  # os.path.join(PROJECT_DIR, 'static')
+STATIC_ROOT = str(PROJECT_DIR.path('static'))
+

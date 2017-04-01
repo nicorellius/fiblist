@@ -1,5 +1,8 @@
-from django.conf.urls import patterns, include, url
+from django.conf.urls import include, url
 from django.contrib import admin
+
+from lists.views import home_page
+from core.views import custom_server_error
 
 # error pages
 handler400 = 'core.views.custom_bad_request'
@@ -8,14 +11,13 @@ handler404 = 'core.views.custom_page_not_found'
 handler500 = 'core.views.custom_server_error'
 handler502 = 'core.views.custom_bad_gateway'
 
-urlpatterns = patterns(
-    '',
+urlpatterns = [
 
-    url(r'^$', 'lists.views.home_page', name='home'),
+    url(r'^$', home_page, name='home'),
 
     url(r'^lists/', include('lists.urls')),
 
     url(r'^admin/', include(admin.site.urls)),
 
-    url(r'^(\d)/$', 'core.views.custom_server_error'),
-)
+    url(r'^(\d)/$', custom_server_error, name='custom-server-error'),
+]
