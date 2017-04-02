@@ -2,7 +2,7 @@ from django.conf.urls import include, url
 from django.contrib import admin
 
 from lists.views import home_page
-from core.views import custom_server_error
+# from core.views import custom_server_error
 
 # error pages
 # handler400 = 'core.views.custom_bad_request'
