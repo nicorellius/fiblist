@@ -1,10 +1,7 @@
-"""
-file        :   test_simple_list_creation.py
-date        :   2014-0811
-module      :   functional_tests
-classes     :
-description :   functional tests for fiblist project
-"""
+# file: test_simple_list_creation.py
+# date: 2014-0811
+# description: functional tests for fiblist project
+
 
 from .base import FunctionalTest
 
@@ -30,12 +27,14 @@ class NewVisitorTest(FunctionalTest):
         # User is invited to enter a to-do item in application.
         input_box = self.browser.find_element_by_id('id_new_item')
 
-        self.assertEqual(input_box.get_attribute('placeholder'), 'Enter a To-Do item')
+        self.assertEqual(input_box.get_attribute('placeholder'),
+                         'Enter a To-Do item')
 
         # User types in "some list item" into text box.
         input_box.send_keys('some list item')
 
-        # When user hits enter, the page updates and the list item is saved.
+        # When user hits enter, the page updates and the
+        # list item is saved.
         input_box.send_keys(Keys.ENTER)
 
         user_list_url = self.browser.current_url
@@ -43,7 +42,8 @@ class NewVisitorTest(FunctionalTest):
         self.assertRegex(user_list_url, '/lists/.+')
         self.check_for_row_in_list_table('1: some list item')
 
-        # The field is still present, so uer can add another list item ("some other list item").
+        # The field is still present, so uer can add
+        # another list item ("some other list item").
         # The, as before, user hits enter, page updates
         input_box = self.browser.find_element_by_id('id_new_item')
         input_box.send_keys('some other list item')
@@ -66,7 +66,8 @@ class NewVisitorTest(FunctionalTest):
         self.assertNotIn('some list item', page_text)
         self.assertNotIn('some other list item', page_text)
 
-        # User2 starts new list by entering text ("yet another list item") into the form field
+        # User2 starts new list by entering text ("yet another list item")
+        # into the form field
         input_box = self.browser.find_element_by_id('id_new_item')
         input_box.send_keys('yet another list item')
         input_box.send_keys(Keys.ENTER)
